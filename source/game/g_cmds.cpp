@@ -4768,6 +4768,11 @@ void ClientCommand( int clientNum ) {
 		Cmd_AccountCreate_F( ent );
 		return;
 	}
+	if (!Q_stricmp(cmd, "roll"))
+	{
+		Cmd_Roll(ent);
+		return;
+	}
 
 
 
