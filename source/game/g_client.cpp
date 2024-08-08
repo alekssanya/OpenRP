@@ -2912,15 +2912,17 @@ void ClientBegin( int clientNum, qboolean allowTeamReset ) {
 
 
 	
-	if ( !client->sess.ojpClientPlugIn )
+	if (!client->sess.ojpClientPlugIn)
 	{
 		//[ClientPlugInDetect]
-		s = Info_ValueForKey( userinfo, "ojp_clientplugin" );
+		s = Info_ValueForKey(userinfo, "ojp_clientplugin");
+		client->sess.ojpClientPlugIn = qtrue;
+		/*
 		if(!Q_stricmp(s, OPENRP_CLIENTVERSION))
 		{
 			client->sess.ojpClientPlugIn = qtrue;
 		}
-		else if ( !*s  ) 
+		else if ( !*s  )
 		{
 			client->sess.ojpClientPlugIn = qfalse;
 		}
@@ -2949,8 +2951,12 @@ void ClientBegin( int clientNum, qboolean allowTeamReset ) {
 
 	trap_SendServerCommand( clientNum, va("cp \"%s\n\"", motd ) );
 	//[/ExpandedMOTD]
-
 	// count current clients and rank for scoreboard
+		CalculateRanks();
+
+		G_ClearClientLog(clientNum);
+	*/
+	}
 	CalculateRanks();
 
 	G_ClearClientLog(clientNum);

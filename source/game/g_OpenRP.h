@@ -6,3 +6,4 @@ void Cmd_ToggleChat_F( gentity_t * ent );
 void Cmd_TrainingSaber_F( gentity_t *ent );
 void Cmd_Hologram_F( gentity_t *ent );
 void Cmd_AutoWalk_F( gentity_t *ent );
+void Cmd_Roll(gentity_t* ent);

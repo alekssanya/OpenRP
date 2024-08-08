@@ -3035,6 +3035,45 @@ void Cmd_CallVote_f( gentity_t *ent ) {
 	trap_SetConfigstring( CS_VOTE_NO, va("%i", level.voteNo ) );	
 }
 
+int roll_dice(int max_value) {
+	int result = rand() % (max_value + 1);
+	while (result == 0) {
+		result = rand() % (max_value + 1);
+	}
+
+	return result;
+}
+void Cmd_Roll(gentity_t* ent) {
+
+	char arg1[MAX_STRING_CHARS];
+
+	if (trap_Argc() != 2)
+	{
+		trap_SendServerCommand(ent - g_entities, "print \"^1Command Usage: ^2/roll ^3<max roll>.\n^1Example: ^2/roll ^320\n\"");
+		return;
+	}
+
+	trap_Argv(1, arg1, sizeof(arg1));
+
+	if (StringIsInteger(arg1) == qfalse) {
+		trap_SendServerCommand(ent - g_entities, "print \"Argument must be an integer.\n\"");
+		return;
+	}
+
+	int max_value = atoi(arg1);
+
+	if (max_value < 2) {
+		trap_SendServerCommand(ent - g_entities, "print \"Maximum value must be at least two.\n\"");
+		return;
+	}
+
+	int result = roll_dice(max_value);
+
+	trap_SendServerCommand(-1, va("chat \"^3<Dice Roll> %s^2 rolled a ^3%d^2 out of ^3%d\n\"", ent->client->pers.netname, result, max_value));
+
+	return;
+}
+
 /*
 ==================
 Cmd_Vote_f
